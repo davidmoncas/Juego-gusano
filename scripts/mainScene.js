@@ -51,7 +51,7 @@ var mainScene = new Phaser.Class({
         //load the images
         this.load.image("back_1", "./img/back_1.png");
         this.load.image("back_2", "./img/back_2.png")
-
+        this.load.image("reintentar", "./img/reintentar.png")
 
 
 
@@ -112,7 +112,7 @@ var mainScene = new Phaser.Class({
 
 
         this.add.image(0, 0, "back_2").setScale(2).setOrigin(0);
-        this.background=this.add.image(0, 0, "back_1").setScale(2).setOrigin(0).setInteractive();
+        this.background = this.add.image(0, 0, "back_1").setScale(2).setOrigin(0).setInteractive();
 
         this.background.on('pointerdown', () => {
             if (!this.isPlaying) return;
@@ -123,6 +123,41 @@ var mainScene = new Phaser.Class({
 
         })
 
+        this.reintentar = this.add.image(200, 400, "reintentar").setScale(2).setInteractive().setVisible(false);
+
+        this.reintentar.on('pointerdown', () => {
+
+            //reset the game
+
+            this.isPlaying = true;
+            this.worm.y = 130;
+            this.worm.play("jump");
+            this.playerVelocity = 0;
+
+            // this.obstacles.forEach((item, index, object) => {
+
+            //     item.destroy()
+            //     object.splice(index, 1);
+            //     index--
+            // })
+            console.log(this.obstacles)
+            for (var i = this.obstacles.length - 1; i > 0; i--) {
+                console.log(i)
+                this.obstacles[i].destroy();
+            }
+            this.noteCounter=0;
+            this.obstacles = []
+
+            this.listTempos.forEach(element => {
+
+                this.createRectangle(element * 150);
+    
+            });
+
+            this.reintentar.setVisible(false);
+
+            console.log(this.obstacles)
+        })
 
         this.worm = this.add.sprite(130, 300, 'worm', 2).setScale(2);
         this.worm.play("jump");
@@ -173,9 +208,9 @@ var mainScene = new Phaser.Class({
         this.listTempos = [8, 11, 12, 16, 20, 24, 32, 35, 36, 40, 44, 48, 56, 59, 60, 64, 68, 72, 76, 84, 87, 88, 92, 96, 100]
 
         this.listTempos.forEach(element => {
-            this.timedEvent = this.time.delayedCall(1000 + element * 250, () => {
-                this.createRectangle();
-            });
+
+            this.createRectangle(element * 150);
+
         });
 
 
@@ -194,7 +229,9 @@ var mainScene = new Phaser.Class({
             this.listNotes[this.noteCounter].play();
             this.noteCounter++;
             this.playerVelocity = -9;
-            this.worm.play("jump")
+            this.worm.play("jump");
+
+
         });
 
 
@@ -212,6 +249,7 @@ var mainScene = new Phaser.Class({
         this.obstacles.forEach((item, index, object) => {
             item.x -= speed;
             if (item.x < -100) {
+                item.destroy()
                 object.splice(index, 1);
             }
             if (doOverlap(item, this.worm)) {
@@ -219,6 +257,7 @@ var mainScene = new Phaser.Class({
                 this.pop.play();
                 item.play("explode");
                 this.isPlaying = false;
+                this.reintentar.setVisible(true);
             }
 
         })
@@ -237,9 +276,9 @@ var mainScene = new Phaser.Class({
     },
 
 
-    createRectangle: function () {
+    createRectangle: function (x) {
         //newObstacle = this.add.rectangle(700, 550 + Math.random() * 10, RX * 2, RY * 2).setFillStyle(0xff0000, 0.6);
-        newObstacle = this.add.sprite(700, 550 + Math.random() * 10, 'balloon', 2).setScale(2);
+        newObstacle = this.add.sprite(700 + x, 550 + Math.random() * 10, 'balloon', 2).setScale(2);
         newObstacle.play("idle")
         this.obstacles.push(newObstacle);
     }
