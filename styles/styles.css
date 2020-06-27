@@ -1,0 +1,32 @@
+
+html,body{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #1c1c1c;
+}
+
+#canvasContainer{
+    width: 100%;
+    margin:0 auto;
+    padding: 0;
+    height: 100%;
+    max-width: 888px;
+        
+    
+}
+
+@font-face {
+    font-family: euroStyle;
+    src: url('../assets/fonts/EurostileLT-Oblique.ttf');
+    font-weight:400;
+    font-weight:normal;
+  }
+
+  @font-face {
+    font-family: euroStyle_condensed;
+    src: url('../assets/fonts/EurostileLT-Condensed.ttf');
+    font-weight:400;
+    font-weight:normal;
+  }
