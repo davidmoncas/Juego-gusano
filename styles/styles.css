@@ -17,16 +17,8 @@ html,body{
     
 }
 
-@font-face {
-    font-family: euroStyle;
-    src: url('../assets/fonts/EurostileLT-Oblique.ttf');
-    font-weight:400;
-    font-weight:normal;
-  }
 
-  @font-face {
-    font-family: euroStyle_condensed;
-    src: url('../assets/fonts/EurostileLT-Condensed.ttf');
-    font-weight:400;
-    font-weight:normal;
-  }
+
+
+
+  
