@@ -388,8 +388,8 @@ var mainScene = new Phaser.Class({
                 this.worm.play("walking");
                 this.squish.play();
 
-                if (this.balloonCounter > 24) {
-                    if (this.noteCounter > 24) { // if all the ballons exploded
+                if (this.balloonCounter >= 24) {
+                    if (this.noteCounter >= 24) { // if all the ballons exploded
                         this.birthday.play();
                         this.pig.setVisible(true);
                         this.tweens.add({
