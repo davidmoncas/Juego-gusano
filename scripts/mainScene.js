@@ -167,13 +167,13 @@ var mainScene = new Phaser.Class({
         })
 
         this.reintentar = this.add.image(200, 400, "reintentar").setScale(2).setInteractive().setVisible(false);
-        this.reset= this.add.image(380, 780, "reset").setScale(0.2).setInteractive().setVisible(true).setOrigin(1);
+        this.reset = this.add.image(380, 780, "reset").setScale(0.2).setInteractive().setVisible(true).setOrigin(1);
         this.jugar = this.add.image(200, 400, "jugar").setScale(2).setInteractive().setVisible(true);
 
 
         this.jugar.on('pointerdown', () => {
             //start the game
-            this.isPlaying=true;
+            this.isPlaying = true;
             this.jugar.setVisible(false);
             this.worm.setVisible(true);
         })
@@ -183,16 +183,16 @@ var mainScene = new Phaser.Class({
         this.reintentar.on('pointerdown', () => {
 
             //reset the game
-            this.cameras.main.zoom=1;
+            this.cameras.main.zoom = 1;
             this.isPlaying = true;
             this.worm.y = 130;
             this.worm.play("jump");
             this.playerVelocity = 0;
-            this.noteCounter=0;
-            this.puntaje.text="0/26";
+            this.noteCounter = 0;
+            this.puntaje.text = "0/25";
             this.pig.setVisible(false);
             this.birthday.stop();
-            this.balloonCounter=0;
+            this.balloonCounter = 0;
 
             for (var i = this.obstacles.length - 1; i >= 0; i--) {
                 this.obstacles[i].destroy();
@@ -214,16 +214,16 @@ var mainScene = new Phaser.Class({
         this.reset.on('pointerdown', () => {
 
             //reset the game
-            this.cameras.main.zoom=1;
+            this.cameras.main.zoom = 1;
             this.isPlaying = true;
             this.worm.y = 130;
             this.worm.play("jump");
             this.playerVelocity = 0;
-            this.noteCounter=0;
-            this.puntaje.text="0/26";
+            this.noteCounter = 0;
+            this.puntaje.text = "0/25";
             this.pig.setVisible(false);
             this.birthday.stop();
-            this.balloonCounter=0;
+            this.balloonCounter = 0;
 
             for (var i = this.obstacles.length - 1; i >= 0; i--) {
                 this.obstacles[i].destroy();
@@ -314,7 +314,10 @@ var mainScene = new Phaser.Class({
 
         this.noteCounter = 0;
 
-        this.puntaje=this.add.text(200,100,this.noteCounter+"/26" , {fontFamily: 'VT323',fontSize:90}).setOrigin(0.5).setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
+        this.puntaje = this.add.text(200, 100, this.noteCounter + "/25", {
+            fontFamily: 'VT323',
+            fontSize: 90
+        }).setOrigin(0.5).setShadow(3, 3, 'rgba(0,0,0,0.5)', 5);
 
         this.input.keyboard.on('keydown_SPACE', (event) => {
             if (!this.isPlaying) return;
@@ -363,7 +366,7 @@ var mainScene = new Phaser.Class({
 
         this.obstacles.forEach((item, index, object) => {
             item.x -= speed;
-            if (item.x < -100) {
+            if (item.x < -50) {
                 this.balloonCounter++;
                 item.destroy()
                 object.splice(index, 1);
@@ -372,7 +375,7 @@ var mainScene = new Phaser.Class({
                 item.note.play();
 
                 this.noteCounter++;
-                this.puntaje.text=this.noteCounter+"/26"
+                this.puntaje.text = this.noteCounter + "/25"
                 item.exploded = true;
                 item.play("explode");
             }
@@ -384,12 +387,14 @@ var mainScene = new Phaser.Class({
         } else {
             this.worm.y = 565;
             this.playerVelocity = 0;
-            if (this.worm.anims.isPlaying && this.worm.anims.currentAnim.key == 'jump') {
-                this.worm.play("walking");
-                this.squish.play();
+            if (this.worm.anims.isPlaying) {
+                if (this.worm.anims.currentAnim.key == 'jump') {
+                    this.worm.play("walking");
+                    this.squish.play();
+                }
 
-                if (this.balloonCounter >= 24) {
-                    if (this.noteCounter >= 24) { // if all the ballons exploded
+                if (this.balloonCounter >= 25) {
+                    if (this.noteCounter >= 25) { // if all the ballons exploded
                         this.birthday.play();
                         this.pig.setVisible(true);
                         this.tweens.add({
